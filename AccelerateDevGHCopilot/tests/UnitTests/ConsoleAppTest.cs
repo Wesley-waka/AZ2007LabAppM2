@@ -16,13 +16,26 @@ using Library.ApplicationCore.Enums;
 [Fact]
 public async Task LoanDetails_ReturnsLoanDetails_WhenExtendLoanedBook()
 {
+    // Arrange
     var loan = new Loan
     {
         Id = 1,
         DueDate = DateTime.Today.AddDays(7),
-        BookItem = new BookItem { Book = new Book { Title = "Book1", Author = new Author { Name = "Author1" } } }
+        BookItem = new BookItem
+        {
+            Book = new Book
+            {
+                Title = "Book1",
+                Author = new Author { Name = "Author1" }
+            }
+        }
     };
-    var patron = new Patron { Id = 2, Name = "Patron2", Loans = new List<Loan> { loan } };
+    var patron = new Patron
+    {
+        Id = 2,
+        Name = "Patron2",
+        Loans = new List<Loan> { loan }
+    };
 
     var loanServiceMock = new Mock<ILoanService>();
     loanServiceMock.Setup(s => s.ExtendLoan(loan.Id)).ReturnsAsync(LoanStatus.Success);
